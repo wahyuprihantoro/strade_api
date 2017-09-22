@@ -1,3 +1,8 @@
 from django.contrib import admin
+from api import models
 
-# Register your models here.
+admin.site.register(models.User)
+admin.site.register(models.StoreCategory)
+admin.site.register(models.RequestStatus)
+admin.site.register(models.Request)
+admin.site.register(models.Product)
