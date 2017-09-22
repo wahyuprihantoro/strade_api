@@ -13,8 +13,8 @@ class StoreCategory(models.Model):
 
 
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=20)
-    role = models.ForeignKey(Group, related_name='role')
+    phone_number = models.CharField(max_length=20, blank=True)
+    role = models.ForeignKey(Group, related_name='role', null=True)
     if hasattr(Group, 'seller'):
         store_name = models.CharField(max_length=50, blank=True)
         store_category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE)
