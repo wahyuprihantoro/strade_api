@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e896d9d0-6d53-4f0b-b89a-52125baf2ece" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/api/views/request_views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/serializers.py" afterPath="$PROJECT_DIR$/api/serializers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/urls.py" afterPath="$PROJECT_DIR$/api/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/views/request_views.py" afterPath="$PROJECT_DIR$/api/views/request_views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -88,8 +86,8 @@
       <file leaf-file-name="request_views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/views/request_views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="34" column="32" lean-forward="false" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+            <state relative-caret-position="663">
+              <caret line="39" column="48" lean-forward="false" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
               <folding>
                 <element signature="e#0#33#0" expanded="true" />
               </folding>
@@ -350,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1508512304317</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="create new request">
+      <created>1508515017336</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1508515017336</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -395,7 +400,8 @@
     <MESSAGE value="adit gitignore" />
     <MESSAGE value="get products by buyer" />
     <MESSAGE value="add req.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="add req.txt" />
+    <MESSAGE value="create new request" />
+    <option name="LAST_COMMIT_MESSAGE" value="create new request" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -415,7 +421,7 @@
         <state relative-caret-position="187">
           <caret line="17" column="83" lean-forward="false" selection-start-line="17" selection-start-column="83" selection-end-line="17" selection-end-column="83" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -507,7 +513,7 @@
         <state relative-caret-position="119">
           <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -565,7 +571,7 @@
         <state relative-caret-position="918">
           <caret line="126" column="0" lean-forward="true" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
           <folding>
-            <element signature="e#309#324#0" expanded="true" />
+            <element signature="e#309#324#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -575,7 +581,7 @@
         <state relative-caret-position="255">
           <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -611,7 +617,7 @@
         <state relative-caret-position="391">
           <caret line="23" column="31" lean-forward="false" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
           <folding>
-            <element signature="e#309#324#0" expanded="true" />
+            <element signature="e#309#324#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -718,7 +724,7 @@
         <state relative-caret-position="2380">
           <caret line="140" column="0" lean-forward="true" selection-start-line="140" selection-start-column="0" selection-end-line="140" selection-end-column="0" />
           <folding>
-            <element signature="e#309#324#0" expanded="true" />
+            <element signature="e#309#324#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -728,7 +734,7 @@
         <state relative-caret-position="153">
           <caret line="9" column="0" lean-forward="true" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#32#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -746,7 +752,7 @@
         <state relative-caret-position="204">
           <caret line="20" column="32" lean-forward="false" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
           <folding>
-            <element signature="e#0#44#0" expanded="true" />
+            <element signature="e#0#44#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -833,8 +839,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/views/request_views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="34" column="32" lean-forward="false" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+        <state relative-caret-position="663">
+          <caret line="39" column="48" lean-forward="false" selection-start-line="39" selection-start-column="48" selection-end-line="39" selection-end-column="48" />
           <folding>
             <element signature="e#0#33#0" expanded="true" />
           </folding>

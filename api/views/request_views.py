@@ -43,3 +43,24 @@ class RequestView(APIView):
             print(str(e))
             response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return response
+
+    def get(self, request):
+        try:
+            user = request.user
+            if user.role.name == 'seller':
+                requests = Request.objects.filter(seller=user).all()
+                request_data = RequestSerializer(requests, many=True).data
+                response = Response(helpers.success_context(request=request_data),
+                                    status=status.HTTP_200_OK)
+            elif user.role.name == 'buyer':
+                requests = Request.objects.filter(buyer=user).all()
+                request_data = RequestSerializer(requests, many=True).data
+                response = Response(helpers.success_context(request=request_data),
+                                    status=status.HTTP_200_OK)
+            else:
+                response = Response(helpers.fail_context(message="Permission denied"),
+                                    status=status.HTTP_403_FORBIDDEN)
+        except Exception as e:
+            print(str(e))
+            response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
