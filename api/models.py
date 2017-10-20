@@ -15,11 +15,14 @@ class StoreCategory(models.Model):
 class User(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     role = models.ForeignKey(Group, related_name='role', null=True)
-    if hasattr(Group, 'seller'):
-        store_name = models.CharField(max_length=50, blank=True)
-        store_category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE)
+    store_name = models.CharField(max_length=50, null=True)
+    store_category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
+
+    @property
+    def full_name(self):
+        return self.get_full_name
 
 
 class Product(models.Model):

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -129,3 +129,7 @@ STATIC_URL = '/static/'
 
 # TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 AUTH_USER_MODEL = 'api.User'
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=9999),
+}
