@@ -46,12 +46,12 @@ class Product(models.Model):
     image = models.OneToOneField(Image, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
+    def __str__(self):
+        return str(self.id) + " " + self.name
+
     @property
     def image_url(self):
         return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
-
-    def __str__(self):
-        return str(self.id) + " " + self.name
 
 
 class RequestStatus(models.Model):
