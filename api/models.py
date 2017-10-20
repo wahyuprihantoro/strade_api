@@ -1,11 +1,24 @@
+import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 from django.utils import timezone
 
+from strade import settings
+
+
+class Image(models.Model):
+    filename = models.CharField(max_length=500, default="default")
+    file = models.ImageField(upload_to='image')
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
+
+    def __str__(self):
+        return str(self.id) + " " + self.filename
+
 
 class StoreCategory(models.Model):
     name = models.CharField(max_length=50)
+    image_url = models.CharField(max_length=1000, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
@@ -17,6 +30,7 @@ class User(AbstractUser):
     role = models.ForeignKey(Group, related_name='role', null=True)
     store_name = models.CharField(max_length=50, null=True)
     store_category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE, null=True)
+    image_url = models.CharField(max_length=1000, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
 
@@ -27,9 +41,14 @@ class User(AbstractUser):
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
-    price = models.IntegerField
+    price = models.IntegerField(default=0)
     store = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.OneToOneField(Image, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
+
+    @property
+    def image_url(self):
+        return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
 
     def __str__(self):
         return str(self.id) + " " + self.name
@@ -46,7 +65,37 @@ class Request(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
     status = models.ForeignKey(RequestStatus, on_delete=models.CASCADE)
+    total_price = models.IntegerField(default=0)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
         return str(self.id) + " " + str(self.buyer) + " -> " + str(self.seller);
+
+
+class RequestItem(models.Model):
+    request = models.ForeignKey(Request, on_delete=models.CASCADE)
+    item = models.ForeignKey(Product, on_delete=models.CASCADE)
+    count = models.IntegerField(default=1)
+
+    def __str__(self):
+        return str(self.id) + " " + self.item.name
+
+
+class UserLocationStatus(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.id) + " " + self.name
+
+
+class UserLocation(models.Model):
+    longitude = models.FloatField(default=0)
+    latitude = models.FloatField(default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    status = models.ForeignKey(UserLocationStatus, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now, blank=True)
+    updated_at = models.DateTimeField(default=timezone.now, blank=True)
+    current_address = models.TextField(blank=True)
+
+    def __str__(self):
+        return str(self.id) + " " + self.current_address

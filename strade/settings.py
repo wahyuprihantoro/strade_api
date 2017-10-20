@@ -127,9 +127,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 AUTH_USER_MODEL = 'api.User'
 
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=9999),
 }
+
+BASE_URL = 'http://localhost:8000'
