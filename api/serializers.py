@@ -1,12 +1,18 @@
 from rest_framework import serializers
 
-from api.models import User, Product, Request, UserLocation
+from api.models import User, Product, Request, UserLocation, Store
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'full_name', 'email', 'role', 'phone_number', 'store_name', 'store_category']
+        fields = ['id', 'username', 'full_name', 'email', 'role', 'phone_number']
+
+
+class StoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Store
+        fields = ['id', 'status', 'name', 'category', 'open_time', 'close_time', 'image_url']
 
 
 class ProductSerializer(serializers.ModelSerializer):

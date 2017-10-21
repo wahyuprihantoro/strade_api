@@ -1,6 +1,6 @@
 from rest_framework_jwt.settings import api_settings
 
-from api.serializers import UserSerializer
+from api.serializers import UserSerializer, StoreSerializer
 
 
 def success_context(**kwargs):
@@ -44,4 +44,8 @@ def get_user_data(header):
 def construct_login_return_content(user):
     token = generate_token(user)
     user_data = UserSerializer(user).data
-    return success_context(user=user_data, token=token)
+    if user.role.name == 'seller':
+        store_data = StoreSerializer(user.store).data
+    else:
+        store_data = None
+    return success_context(user=user_data, store=store_data, token=token)
