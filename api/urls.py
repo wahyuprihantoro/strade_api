@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^requests/?', request_views.RequestView.as_view()),
     url(r'^user/location', location_views.LocationView.as_view()),
     url(r'^stores', store_views.StoreView.as_view()),
+    url(r'^user/profile-picture', user_views.UpdatePhotoProfileView.as_view()),
 ]

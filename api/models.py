@@ -54,13 +54,17 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     role = models.ForeignKey(Group, related_name='role', null=True)
     store = models.OneToOneField(Store, on_delete=models.CASCADE, null=True)
-    image_url = models.CharField(max_length=1000, null=True)
+    image = models.OneToOneField(Image, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
 
     @property
     def full_name(self):
         return self.get_full_name
+
+    @property
+    def image_url(self):
+        return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
 
 
 class Product(models.Model):

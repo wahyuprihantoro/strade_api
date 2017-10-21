@@ -6,7 +6,7 @@ from api.models import User, Product, Request, UserLocation, Store
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'full_name', 'email', 'role', 'phone_number']
+        fields = ['id', 'username', 'full_name', 'email', 'role', 'phone_number', 'image_url']
 
 
 class StoreSerializer(serializers.ModelSerializer):

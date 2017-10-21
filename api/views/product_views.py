@@ -54,6 +54,9 @@ class ProductView(APIView):
             elif price is None or int(price) < 0:
                 response = Response(helpers.fail_context(message="harga produk anda tidak valid"),
                                     status=status.HTTP_200_OK)
+            elif image_base64 is None:
+                response = Response(helpers.fail_context(message="Gambar tidak valid"),
+                                    status=status.HTTP_200_OK)
             else:
                 image_data = b64decode(image_base64)
                 image_name = "product-" + str(uuid.uuid4()) + ".jpg"
