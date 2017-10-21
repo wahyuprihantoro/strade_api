@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e896d9d0-6d53-4f0b-b89a-52125baf2ece" name="Default" comment="">
+    <list default="true" id="1b967b14-427e-4dbe-93be-b5776b9c3edb" name="Default" comment="">
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/views/store_views.py" afterPath="$PROJECT_DIR$/api/views/store_views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/views/user_views.py" afterPath="$PROJECT_DIR$/api/views/user_views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,6 +16,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="88" column="5" lean-forward="true" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/models.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -42,16 +50,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="10" column="46" lean-forward="true" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="user_views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/views/user_views.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,12 +60,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="store_views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="store_views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/views/store_views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-74">
-              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="-120">
+              <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -118,26 +118,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="request_views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/views/request_views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
-              <caret line="74" column="38" lean-forward="false" selection-start-line="74" selection-start-column="38" selection-end-line="74" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#33#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Python Script" />
-      </list>
-    </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -147,6 +128,7 @@
       <find>templa</find>
       <find>user</find>
       <find>status</find>
+      <find>xml</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -157,7 +139,6 @@
       <list>
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/strade/urls.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/api/permissions.py" />
         <option value="$PROJECT_DIR$/req.txt" />
         <option value="$PROJECT_DIR$/api/views/location_views.py" />
@@ -171,6 +152,8 @@
         <option value="$PROJECT_DIR$/api/urls.py" />
         <option value="$PROJECT_DIR$/api/views/user_views.py" />
         <option value="$PROJECT_DIR$/api/views/store_views.py" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -240,10 +223,6 @@
       </pane>
       <pane id="Scope" />
     </panes>
-  </component>
-  <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="add_unversioned_files" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -412,17 +391,25 @@
       <option name="project" value="LOCAL" />
       <updated>1508626284525</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="update store">
+      <created>1508627276239</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1508627276239</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12556732" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32730263" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32888147" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -463,7 +450,8 @@
     <MESSAGE value="separate store data from its user" />
     <MESSAGE value="add some models to admin site" />
     <MESSAGE value="create store" />
-    <option name="LAST_COMMIT_MESSAGE" value="create store" />
+    <MESSAGE value="update store" />
+    <option name="LAST_COMMIT_MESSAGE" value="update store" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -619,14 +607,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="66">
@@ -735,14 +715,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-632">
           <caret line="819" column="6" lean-forward="false" selection-start-line="819" selection-start-column="6" selection-end-line="819" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1632">
-          <caret line="96" column="0" lean-forward="false" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -891,8 +863,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/views/store_views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-74">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        <state relative-caret-position="-120">
+          <caret line="28" column="32" lean-forward="false" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1479">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="88" column="5" lean-forward="true" selection-start-line="88" selection-start-column="5" selection-end-line="88" selection-end-column="5" />
           <folding />
         </state>
       </provider>
