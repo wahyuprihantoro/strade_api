@@ -25,11 +25,29 @@ class StoreCategory(models.Model):
         return str(self.id) + " " + self.name
 
 
+class StoreStatus(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return str(self.id) + " " + self.name
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=50)
+    category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE)
+    status = models.ForeignKey(StoreStatus, on_delete=models.CASCADE)
+    open_time = models.TimeField(null=True)
+    close_time = models.TimeField(null=True)
+    image_url = models.CharField(max_length=1000, null=True)
+
+    def __str__(self):
+        return str(self.id) + " " + self.name
+
+
 class User(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     role = models.ForeignKey(Group, related_name='role', null=True)
-    store_name = models.CharField(max_length=50, null=True)
-    store_category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE, null=True)
+    store = models.OneToOneField(Store, on_delete=models.CASCADE, null=True)
     image_url = models.CharField(max_length=1000, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
