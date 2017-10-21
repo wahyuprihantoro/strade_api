@@ -38,7 +38,13 @@ class Store(models.Model):
     status = models.ForeignKey(StoreStatus, on_delete=models.CASCADE)
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
-    image_url = models.CharField(max_length=1000, null=True)
+    image = models.OneToOneField(Image, on_delete=models.CASCADE, null=True)
+
+    @property
+    def image_url(self):
+        if self.image is None:
+            return None
+        return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
 
     def __str__(self):
         return str(self.id) + " " + self.name
