@@ -56,7 +56,7 @@ class ProductView(APIView):
                                     status=status.HTTP_200_OK)
             else:
                 image_data = b64decode(image_base64)
-                image_name = str(uuid.uuid4()) + ".jpg"
+                image_name = "product-" + str(uuid.uuid4()) + ".jpg"
                 file = ContentFile(image_data, image_name)
                 image = Image.objects.create(filename=image_name, file=file)
                 product = Product.objects.create(store=user, name=name, price=price, image=image)

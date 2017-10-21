@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from api.views import user_views, product_views, request_views, location_views
+from api.views import user_views, product_views, request_views, location_views, store_views
 
 urlpatterns = [
     url(r'^login', user_views.LoginView.as_view()),
@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^products/?', product_views.ProductView.as_view()),
     url(r'^requests/?', request_views.RequestView.as_view()),
     url(r'^user/location', location_views.LocationView.as_view()),
+    url(r'^stores', store_views.StoreView.as_view()),
 ]
