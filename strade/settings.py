@@ -137,4 +137,9 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=9999),
 }
 
-BASE_URL = 'http://localhost:8000'
+if DEBUG:
+    BASE_URL = 'http://localhost:8000'
+else:
+    BASE_URL = 'http://localhost:8000'
+
+APPEND_SLASH = False

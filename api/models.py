@@ -66,6 +66,8 @@ class Request(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
     status = models.ForeignKey(RequestStatus, on_delete=models.CASCADE)
     total_price = models.IntegerField(default=0)
+    longitude = models.FloatField(default=0)
+    latitude = models.FloatField(default=0)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
@@ -92,10 +94,9 @@ class UserLocation(models.Model):
     longitude = models.FloatField(default=0)
     latitude = models.FloatField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    status = models.ForeignKey(UserLocationStatus, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
-    current_address = models.TextField(blank=True)
+    current_address = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return str(self.id) + " " + self.current_address
