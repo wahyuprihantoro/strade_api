@@ -22,9 +22,12 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class RequestSerializer(serializers.ModelSerializer):
+    seller = UserSerializer()
+    buyer = UserSerializer()
+
     class Meta:
         model = Request
-        fields = ('id', 'seller', 'status', 'total_price', 'latitude', 'longitude')
+        fields = ('id', 'seller', 'status', 'total_price', 'latitude', 'longitude', 'note', 'address', 'buyer')
 
 
 class UserLocationSerializer(serializers.ModelSerializer):

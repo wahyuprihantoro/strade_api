@@ -96,6 +96,8 @@ class Request(models.Model):
     total_price = models.IntegerField(default=0)
     longitude = models.FloatField(default=0)
     latitude = models.FloatField(default=0)
+    address = models.TextField(default="")
+    note = models.TextField(default="", null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):

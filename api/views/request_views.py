@@ -21,10 +21,15 @@ class RequestView(APIView):
             product_ids = request.data.get('product_ids')
             latitude = request.data.get('latitude')
             longitude = request.data.get('longitude')
+            note = request.data.get('note')
+            address = request.data.get('address')
             seller = User.objects.filter(id=seller_id).first()
             user = request.user
             if seller is None:
                 response = Response(helpers.fail_context(message="penjual yang anda pilih tidak valid"),
+                                    status=status.HTTP_200_OK)
+            elif address is None:
+                response = Response(helpers.fail_context(message="alamat tidak valid"),
                                     status=status.HTTP_200_OK)
             elif user.role.name != 'buyer':
                 response = Response(helpers.fail_context(message="Permission denied"),
@@ -38,7 +43,7 @@ class RequestView(APIView):
                 for p in products:
                     total_price += p.price
                 r = Request.objects.create(seller=seller, buyer=user, status_id=1, total_price=total_price,
-                                           latitude=latitude, longitude=longitude)
+                                           latitude=latitude, longitude=longitude, note=note, address=address)
                 for p in products:
                     RequestItem.objects.create(request=r, item=p)
                 request_data = RequestSerializer(r).data
@@ -51,8 +56,8 @@ class RequestView(APIView):
     def get(self, request):
         try:
             user = request.user
-            location = UserLocation.objects.get(user=user)
             if user.role.name == 'seller':
+                location = UserLocation.objects.get(user=user)
                 requests = Request.objects.filter(seller=user).all()
                 request_data = []
                 for r in requests:
@@ -68,6 +73,7 @@ class RequestView(APIView):
                 requests = Request.objects.filter(buyer=user).all()
                 request_data = []
                 for r in requests:
+                    print(r.seller)
                     location = UserLocation.objects.get(user=r.seller)
                     buyer_location = (location.latitude, location.longitude)
                     seller_location = (r.latitude, r.longitude)
