@@ -60,6 +60,10 @@ class RegisterView(APIView):
                     role=user_role,
                     phone_number=phone_number
                 )
+                if user.role.name == 'seller':
+                    store = Store.objects.create(name=username)
+                    user.store = store
+                    user.save()
                 content = helpers.construct_login_return_content(user)
                 response = Response(content, status=status.HTTP_200_OK)
         except Exception as e:

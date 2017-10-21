@@ -1,6 +1,5 @@
 import uuid
 from base64 import b64decode
-from datetime import time
 
 from django.core.files.base import ContentFile
 from rest_framework import status
@@ -37,22 +36,22 @@ class StoreView(APIView):
             elif open_time is None or close_time is None:
                 response = Response(helpers.fail_context(message="Jam operasional toko tidak valid"),
                                     status=status.HTTP_200_OK)
-            elif image_base64 is None:
-                response = Response(helpers.fail_context(message="Gambar toko tidak valid"),
-                                    status=status.HTTP_200_OK)
             else:
-
-                image_data = b64decode(image_base64)
-                image_name = "store-" + str(uuid.uuid4()) + ".jpg"
-                file = ContentFile(image_data, image_name)
-                image = Image.objects.create(filename=image_name, file=file)
+                image = None
+                if image_base64 is not None:
+                    image_data = b64decode(image_base64)
+                    image_name = "store-" + str(uuid.uuid4()) + ".jpg"
+                    file = ContentFile(image_data, image_name)
+                    image = Image.objects.create(filename=image_name, file=file)
 
                 store_status = StoreStatus.objects.filter(name="open").first()
                 if store_status is None:
                     store_status = StoreStatus.objects.create(name="open")
-                store = Store.objects.create(name=store_name, status=store_status, open_time=open_time,
-                                             close_time=close_time,
-                                             category=user_store_category, image=image)
+                Store.objects.filter(id=user.store.id).update(name=store_name, status=store_status,
+                                                              open_time=open_time,
+                                                              close_time=close_time,
+                                                              category=user_store_category, image=image)
+                store = Store.objects.filter(id=user.store.id).first()
 
                 data = StoreSerializer(store).data
                 response = Response(helpers.success_context(store=data),
