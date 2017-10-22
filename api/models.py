@@ -105,7 +105,7 @@ class Request(models.Model):
 
 
 class RequestItem(models.Model):
-    request = models.ForeignKey(Request, on_delete=models.CASCADE)
+    request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='items')
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     count = models.IntegerField(default=1)
 
