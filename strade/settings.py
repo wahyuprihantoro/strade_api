@@ -24,7 +24,7 @@ SECRET_KEY = '+#1zcqhsxi)2ym+&4!_r%ak0(fbm0+%k^(@=o5a3#fi3chxjb%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['159.89.207.249', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['159.89.200.247', '0.0.0.0', 'localhost']
 
 # Application definition
 
@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'strade.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'strade',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
+        'NAME': 'django',
+        'USER': 'django',
+        'PASSWORD': 'a8a8675023878b3669cecf5d5ef7b0ba',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -141,6 +141,6 @@ JWT_AUTH = {
 if DEBUG:
     BASE_URL = 'http://localhost:8000'
 else:
-    BASE_URL = 'http://159.89.207.249'
+    BASE_URL = 'http://159.89.200.247'
 
 APPEND_SLASH = False
