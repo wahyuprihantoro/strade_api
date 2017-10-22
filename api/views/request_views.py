@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from api.controllers import helpers
-from api.models import Product, User, RequestItem, Request, UserLocation
+from api.models import Product, User, RequestItem, Request, UserLocation, RequestStatus
 from api.permissions import IsBuyer
 from api.serializers import RequestSerializer
 from geopy.distance import vincenty
@@ -25,7 +25,7 @@ class RequestView(APIView):
             address = request.data.get('address')
             seller = User.objects.filter(id=seller_id).first()
             user = request.user
-            if seller is None:
+            if seller is None or seller.role.name != 'seller':
                 response = Response(helpers.fail_context(message="penjual yang anda pilih tidak valid"),
                                     status=status.HTTP_200_OK)
             elif address is None:
@@ -86,6 +86,32 @@ class RequestView(APIView):
             else:
                 response = Response(helpers.fail_context(message="Permission denied"),
                                     status=status.HTTP_403_FORBIDDEN)
+        except Exception as e:
+            print(str(e))
+            response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+
+
+class UpdateRequestStatusView(APIView):
+    authentication_classes = [JSONWebTokenAuthentication]
+
+    def post(self, request, req_id):
+        try:
+            # req_id = request.data.get('id')
+            r = Request.objects.filter(id=req_id).first()
+            status_name = request.data.get('status')
+            request_status = RequestStatus.objects.filter(name=status_name).first()
+            if r is None:
+                response = Response(helpers.fail_context(message="request tidak ditemukan"),
+                                    status=status.HTTP_200_OK)
+            elif request_status is None:
+                response = Response(helpers.fail_context(message="request status salah"),
+                                    status=status.HTTP_200_OK)
+            else:
+                r.status = request_status
+                r.save()
+                request_data = RequestSerializer(r).data
+                response = Response(helpers.success_context(request=request_data), status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))
             response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
