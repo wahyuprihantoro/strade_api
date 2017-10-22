@@ -34,8 +34,8 @@ class StoreStatus(models.Model):
 
 class Store(models.Model):
     name = models.CharField(max_length=50)
-    category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE)
-    status = models.ForeignKey(StoreStatus, on_delete=models.CASCADE)
+    category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE, null=True)
+    status = models.ForeignKey(StoreStatus, on_delete=models.CASCADE, null=True)
     open_time = models.TimeField(null=True)
     close_time = models.TimeField(null=True)
     image = models.OneToOneField(Image, on_delete=models.CASCADE, null=True)

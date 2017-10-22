@@ -67,9 +67,7 @@ class GetStoresView(APIView):
 
     def get(self, request, category_id):
         try:
-            print(category_id)
             store_category = StoreCategory.objects.filter(id=category_id).first()
-            print(store_category)
             if category_id is None:
                 response = Response(helpers.fail_context(message="Kategori toko tidak valid"),
                                     status=status.HTTP_200_OK)
