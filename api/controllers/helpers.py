@@ -44,11 +44,4 @@ def get_user_data(header):
 def construct_login_return_content(user):
     token = generate_token(user)
     user_data = UserSerializer(user).data
-    if user.role.name == 'seller':
-        if user.store is None:
-            store_data = None
-        else:
-            store_data = StoreSerializer(user.store).data
-    else:
-        store_data = None
-    return success_context(user=user_data, store=store_data, token=token)
+    return success_context(user=user_data, token=token)

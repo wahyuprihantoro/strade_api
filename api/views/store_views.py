@@ -8,8 +8,8 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from api.controllers import helpers
-from api.models import StoreCategory, Store, StoreStatus, Image
-from api.serializers import StoreSerializer
+from api.models import StoreCategory, Store, StoreStatus, Image, User
+from api.serializers import StoreSerializer, UserSerializer
 
 
 class StoreView(APIView):
@@ -55,6 +55,32 @@ class StoreView(APIView):
 
                 data = StoreSerializer(store).data
                 response = Response(helpers.success_context(store=data),
+                                    status=status.HTTP_200_OK)
+        except Exception as e:
+            print(str(e))
+            response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+
+
+class GetStoresView(APIView):
+    authentication_classes = [JSONWebTokenAuthentication]
+
+    def get(self, request, category_id):
+        try:
+            print(category_id)
+            store_category = StoreCategory.objects.filter(id=category_id).first()
+            print(store_category)
+            if category_id is None:
+                response = Response(helpers.fail_context(message="Kategori toko tidak valid"),
+                                    status=status.HTTP_200_OK)
+            elif store_category is None:
+                response = Response(helpers.fail_context(message="Kategori toko tidak valid"),
+                                    status=status.HTTP_200_OK)
+            else:
+                stores = Store.objects.filter(category=store_category).all()
+                users = User.objects.filter(store__in=stores).all()
+                data = UserSerializer(users, many=True).data
+                response = Response(helpers.success_context(users=data),
                                     status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))

@@ -1,18 +1,20 @@
 from rest_framework import serializers
 
-from api.models import User, Product, Request, UserLocation, Store, RequestItem
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'full_name', 'email', 'role', 'phone_number', 'image_url']
+from api.models import User, Product, Request, UserLocation, Store, RequestItem, StoreCategory
 
 
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Store
         fields = ['id', 'status', 'name', 'category', 'open_time', 'close_time', 'image_url']
+
+
+class UserSerializer(serializers.ModelSerializer):
+    store = StoreSerializer()
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'full_name', 'role', 'phone_number', 'image_url', 'store']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -43,3 +45,9 @@ class UserLocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserLocation
         fields = ('id', 'latitude', 'longitude', 'current_address')
+
+
+class StoreCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        module = StoreCategory
+        fields = ('id', 'name', 'image_url')

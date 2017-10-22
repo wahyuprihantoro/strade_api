@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^requests/(?P<req_id>[0-9]+)', request_views.UpdateRequestStatusView.as_view()),
     url(r'^requests/?', request_views.RequestView.as_view()),
     url(r'^user/location', location_views.LocationView.as_view()),
+    url(r'^stores/(?P<category_id>[0-9]+)', store_views.GetStoresView.as_view()),
     url(r'^stores', store_views.StoreView.as_view()),
     url(r'^user/profile-picture', user_views.UpdatePhotoProfileView.as_view()),
 ]
