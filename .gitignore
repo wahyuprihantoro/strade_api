@@ -94,7 +94,7 @@ ENV/
 
 # Rope project settings
 .ropeproject
-
-api/migrations/
 .idea
+api/migrations/
 media
+.idea/workspace.xml

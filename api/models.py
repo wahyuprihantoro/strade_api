@@ -54,13 +54,17 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, blank=True)
     role = models.ForeignKey(Group, related_name='role', null=True)
     store = models.OneToOneField(Store, on_delete=models.CASCADE, null=True)
-    image_url = models.CharField(max_length=1000, null=True)
+    image = models.OneToOneField(Image, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
     updated_at = models.DateTimeField(default=timezone.now, blank=True)
 
     @property
     def full_name(self):
         return self.get_full_name
+
+    @property
+    def image_url(self):
+        return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
 
 
 class Product(models.Model):
@@ -92,6 +96,8 @@ class Request(models.Model):
     total_price = models.IntegerField(default=0)
     longitude = models.FloatField(default=0)
     latitude = models.FloatField(default=0)
+    address = models.TextField(default="")
+    note = models.TextField(default="", null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
 
     def __str__(self):
@@ -99,7 +105,7 @@ class Request(models.Model):
 
 
 class RequestItem(models.Model):
-    request = models.ForeignKey(Request, on_delete=models.CASCADE)
+    request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='items')
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     count = models.IntegerField(default=1)
 

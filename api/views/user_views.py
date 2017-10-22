@@ -1,12 +1,19 @@
+import uuid
+from base64 import b64decode
+
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
+from django.core.files.base import ContentFile
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from api.controllers import helpers
-from api.models import User, StoreCategory, Store, StoreStatus
+from api.models import User, Store, Image
 from django.contrib.auth.models import Group
+
+from api.serializers import UserSerializer
 
 
 class LoginView(APIView):
@@ -66,6 +73,31 @@ class RegisterView(APIView):
                     user.save()
                 content = helpers.construct_login_return_content(user)
                 response = Response(content, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(str(e))
+            response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+
+
+class UpdatePhotoProfileView(APIView):
+    authentication_classes = [JSONWebTokenAuthentication]
+
+    def post(self, request):
+        user = request.user
+        image_base64 = request.data.get('image')
+        try:
+            if image_base64 is None:
+                response = Response(helpers.fail_context(message="Gambar tidak valid"),
+                                    status=status.HTTP_200_OK)
+            else:
+                image_data = b64decode(image_base64)
+                image_name = "user-" + str(uuid.uuid4()) + ".jpg"
+                file = ContentFile(image_data, image_name)
+                image = Image.objects.create(filename=image_name, file=file)
+                user.image = image
+                user.save()
+                data = UserSerializer(user).data
+                response = Response(helpers.success_context(user=data), status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))
             response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)

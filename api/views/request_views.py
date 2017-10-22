@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from api.controllers import helpers
-from api.models import Product, User, RequestItem, Request, UserLocation
+from api.models import Product, User, RequestItem, Request, UserLocation, RequestStatus
 from api.permissions import IsBuyer
 from api.serializers import RequestSerializer
 from geopy.distance import vincenty
@@ -21,10 +21,15 @@ class RequestView(APIView):
             product_ids = request.data.get('product_ids')
             latitude = request.data.get('latitude')
             longitude = request.data.get('longitude')
+            note = request.data.get('note')
+            address = request.data.get('address')
             seller = User.objects.filter(id=seller_id).first()
             user = request.user
-            if seller is None:
+            if seller is None or seller.role.name != 'seller':
                 response = Response(helpers.fail_context(message="penjual yang anda pilih tidak valid"),
+                                    status=status.HTTP_200_OK)
+            elif address is None:
+                response = Response(helpers.fail_context(message="alamat tidak valid"),
                                     status=status.HTTP_200_OK)
             elif user.role.name != 'buyer':
                 response = Response(helpers.fail_context(message="Permission denied"),
@@ -38,7 +43,7 @@ class RequestView(APIView):
                 for p in products:
                     total_price += p.price
                 r = Request.objects.create(seller=seller, buyer=user, status_id=1, total_price=total_price,
-                                           latitude=latitude, longitude=longitude)
+                                           latitude=latitude, longitude=longitude, note=note, address=address)
                 for p in products:
                     RequestItem.objects.create(request=r, item=p)
                 request_data = RequestSerializer(r).data
@@ -51,8 +56,8 @@ class RequestView(APIView):
     def get(self, request):
         try:
             user = request.user
-            location = UserLocation.objects.get(user=user)
             if user.role.name == 'seller':
+                location = UserLocation.objects.get(user=user)
                 requests = Request.objects.filter(seller=user).all()
                 request_data = []
                 for r in requests:
@@ -68,6 +73,7 @@ class RequestView(APIView):
                 requests = Request.objects.filter(buyer=user).all()
                 request_data = []
                 for r in requests:
+                    print(r.seller)
                     location = UserLocation.objects.get(user=r.seller)
                     buyer_location = (location.latitude, location.longitude)
                     seller_location = (r.latitude, r.longitude)
@@ -80,6 +86,32 @@ class RequestView(APIView):
             else:
                 response = Response(helpers.fail_context(message="Permission denied"),
                                     status=status.HTTP_403_FORBIDDEN)
+        except Exception as e:
+            print(str(e))
+            response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+
+
+class UpdateRequestStatusView(APIView):
+    authentication_classes = [JSONWebTokenAuthentication]
+
+    def post(self, request, req_id):
+        try:
+            # req_id = request.data.get('id')
+            r = Request.objects.filter(id=req_id).first()
+            status_name = request.data.get('status')
+            request_status = RequestStatus.objects.filter(name=status_name).first()
+            if r is None:
+                response = Response(helpers.fail_context(message="request tidak ditemukan"),
+                                    status=status.HTTP_200_OK)
+            elif request_status is None:
+                response = Response(helpers.fail_context(message="request status salah"),
+                                    status=status.HTTP_200_OK)
+            else:
+                r.status = request_status
+                r.save()
+                request_data = RequestSerializer(r).data
+                response = Response(helpers.success_context(request=request_data), status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))
             response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
