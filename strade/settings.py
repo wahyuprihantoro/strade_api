@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+#1zcqhsxi)2ym+&4!_r%ak0(fbm0+%k^(@=o5a3#fi3chxjb%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['159.89.200.247', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['159.89.200.247', '0.0.0.0', 'localhost', '10.0.3.2', '192.168.236.2']
 
 # Application definition
 
@@ -70,27 +70,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'strade.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'a8a8675023878b3669cecf5d5ef7b0ba',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if not DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'django',
+            'USER': 'django',
+            'PASSWORD': 'a8a8675023878b3669cecf5d5ef7b0ba',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
     }
-}
-
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'strade',
+            'USER': 'postgres',
+            'PASSWORD': 'password',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -139,7 +140,8 @@ JWT_AUTH = {
 }
 
 if DEBUG:
-    BASE_URL = 'http://localhost:8000'
+    # BASE_URL = 'http://localhost:8000'
+    BASE_URL = 'http://192.168.236.2:8000'
 else:
     BASE_URL = 'http://159.89.200.247'
 
