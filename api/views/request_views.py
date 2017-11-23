@@ -5,13 +5,13 @@ from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from api.controllers import helpers
-from api.models import Product, User, RequestItem, Request, UserLocation, RequestStatus
+from api.models import Product, User, OrderItem, Order, UserLocation, OrderStatus
 from api.permissions import IsBuyer
-from api.serializers import RequestSerializer
+from api.serializers import OrderSerializer
 from geopy.distance import vincenty
 
 
-class RequestView(APIView):
+class OrderView(APIView):
     authentication_classes = [JSONWebTokenAuthentication]
 
     @permission_classes(IsBuyer, )
@@ -42,12 +42,12 @@ class RequestView(APIView):
                 total_price = 0
                 for p in products:
                     total_price += p.price
-                r = Request.objects.create(seller=seller, buyer=user, status_id=1, total_price=total_price,
-                                           latitude=latitude, longitude=longitude, note=note, address=address)
+                order = Order.objects.create(seller=seller, buyer=user, status_id=1, total_price=total_price,
+                                             latitude=latitude, longitude=longitude, note=note, address=address)
                 for p in products:
-                    RequestItem.objects.create(request=r, item=p)
-                request_data = RequestSerializer(r).data
-                response = Response(helpers.success_context(request=request_data), status=status.HTTP_200_OK)
+                    OrderItem.objects.create(order=order, item=p)
+                request_data = OrderSerializer(order).data
+                response = Response(helpers.success_context(order=request_data), status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))
             response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -58,30 +58,30 @@ class RequestView(APIView):
             user = request.user
             if user.role.name == 'seller':
                 location = UserLocation.objects.get(user=user)
-                requests = Request.objects.filter(seller=user).all()
-                request_data = []
-                for r in requests:
+                orders = Order.objects.filter(seller=user).all()
+                order_data = []
+                for o in orders:
                     buyer_location = (location.latitude, location.longitude)
-                    seller_location = (r.latitude, r.longitude)
+                    seller_location = (o.latitude, o.longitude)
                     distance = vincenty(buyer_location, seller_location).km
-                    data = RequestSerializer(r).data
+                    data = OrderSerializer(o).data
                     data['distance'] = distance
-                    request_data += [data]
-                response = Response(helpers.success_context(requests=request_data),
+                    order_data += [data]
+                response = Response(helpers.success_context(orders=order_data),
                                     status=status.HTTP_200_OK)
             elif user.role.name == 'buyer':
-                requests = Request.objects.filter(buyer=user).all()
-                request_data = []
-                for r in requests:
-                    print(r.seller)
-                    location = UserLocation.objects.get(user=r.seller)
+                orders = Order.objects.filter(buyer=user).all()
+                order_data = []
+                for o in orders:
+                    print(o.seller)
+                    location = UserLocation.objects.get(user=o.seller)
                     buyer_location = (location.latitude, location.longitude)
-                    seller_location = (r.latitude, r.longitude)
+                    seller_location = (o.latitude, o.longitude)
                     distance = vincenty(buyer_location, seller_location).km
-                    data = RequestSerializer(r).data
+                    data = OrderSerializer(o).data
                     data['distance'] = distance
-                    request_data += [data]
-                response = Response(helpers.success_context(requests=request_data),
+                    order_data += [data]
+                response = Response(helpers.success_context(orders=order_data),
                                     status=status.HTTP_200_OK)
             else:
                 response = Response(helpers.fail_context(message="Permission denied"),
@@ -92,26 +92,25 @@ class RequestView(APIView):
         return response
 
 
-class UpdateRequestStatusView(APIView):
+class UpdateOrderStatusView(APIView):
     authentication_classes = [JSONWebTokenAuthentication]
 
     def post(self, request, req_id):
         try:
-            # req_id = request.data.get('id')
-            r = Request.objects.filter(id=req_id).first()
+            r = Order.objects.filter(id=req_id).first()
             status_name = request.data.get('status')
-            request_status = RequestStatus.objects.filter(name=status_name).first()
+            order_status = OrderStatus.objects.filter(name=status_name).first()
             if r is None:
-                response = Response(helpers.fail_context(message="request tidak ditemukan"),
+                response = Response(helpers.fail_context(message="order tidak ditemukan"),
                                     status=status.HTTP_200_OK)
-            elif request_status is None:
-                response = Response(helpers.fail_context(message="request status salah"),
+            elif order_status is None:
+                response = Response(helpers.fail_context(message="order status salah"),
                                     status=status.HTTP_200_OK)
             else:
-                r.status = request_status
+                r.status = order_status
                 r.save()
-                request_data = RequestSerializer(r).data
-                response = Response(helpers.success_context(request=request_data), status=status.HTTP_200_OK)
+                order_data = OrderSerializer(r).data
+                response = Response(helpers.success_context(order=order_data), status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))
             response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)

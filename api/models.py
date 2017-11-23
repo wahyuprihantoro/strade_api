@@ -82,17 +82,17 @@ class Product(models.Model):
         return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
 
 
-class RequestStatus(models.Model):
+class OrderStatus(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return str(self.id) + " " + self.name
 
 
-class Request(models.Model):
+class Order(models.Model):
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller')
     buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer')
-    status = models.ForeignKey(RequestStatus, on_delete=models.CASCADE)
+    status = models.ForeignKey(OrderStatus, on_delete=models.CASCADE)
     total_price = models.IntegerField(default=0)
     longitude = models.FloatField(default=0)
     latitude = models.FloatField(default=0)
@@ -104,8 +104,8 @@ class Request(models.Model):
         return str(self.id) + " " + str(self.buyer) + " -> " + str(self.seller);
 
 
-class RequestItem(models.Model):
-    request = models.ForeignKey(Request, on_delete=models.CASCADE, related_name='items')
+class OrderItem(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     item = models.ForeignKey(Product, on_delete=models.CASCADE)
     count = models.IntegerField(default=1)
 

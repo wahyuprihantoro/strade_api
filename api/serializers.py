@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api.models import User, Product, Request, UserLocation, Store, RequestItem, StoreCategory
+from api.models import User, Product, Order, UserLocation, Store, OrderItem, StoreCategory
 
 
 class StoreSerializer(serializers.ModelSerializer):
@@ -23,21 +23,21 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'price', 'image_url')
 
 
-class RequestItemSerializer(object):
+class OrderItemSerializer(object):
     item = ProductSerializer()
 
     class Meta:
-        model = RequestItem
+        model = OrderItem
         fields = ('id', 'item', 'count')
 
 
-class RequestSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     seller = UserSerializer()
     buyer = UserSerializer()
     items = serializers.RelatedField(many=True, read_only=True)
 
     class Meta:
-        model = Request
+        model = Order
         fields = ('id', 'seller', 'status', 'total_price', 'latitude', 'longitude', 'note', 'address', 'buyer', 'items')
 
 
