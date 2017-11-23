@@ -18,11 +18,15 @@ class Image(models.Model):
 
 class StoreCategory(models.Model):
     name = models.CharField(max_length=50)
-    image_url = models.CharField(max_length=1000, null=True)
     created_at = models.DateTimeField(default=timezone.now, blank=True)
+    image = models.OneToOneField(Image, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return str(self.id) + " " + self.name
+
+    @property
+    def image_url(self):
+        return os.path.join(settings.BASE_URL, 'media/image/' + self.image.filename)
 
 
 class StoreStatus(models.Model):
