@@ -65,6 +65,7 @@ class OrderView(APIView):
                     seller_location = (o.latitude, o.longitude)
                     distance = vincenty(buyer_location, seller_location).km
                     data = OrderSerializer(o).data
+                    print(data)
                     data['distance'] = distance
                     order_data += [data]
                 response = Response(helpers.success_context(orders=order_data),

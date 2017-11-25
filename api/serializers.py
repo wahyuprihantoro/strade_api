@@ -23,7 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'price', 'image_url')
 
 
-class OrderItemSerializer(object):
+class OrderItemSerializer(serializers.ModelSerializer):
     item = ProductSerializer()
 
     class Meta:
@@ -34,7 +34,7 @@ class OrderItemSerializer(object):
 class OrderSerializer(serializers.ModelSerializer):
     seller = UserSerializer()
     buyer = UserSerializer()
-    items = serializers.RelatedField(many=True, read_only=True)
+    items = OrderItemSerializer(many=True, read_only=True)
 
     class Meta:
         model = Order
