@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from geopy import Nominatim
+from geopy import Nominatim, ArcGIS
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -23,7 +23,7 @@ class LocationView(APIView):
                 response = Response(helpers.fail_context(message="koordinat lokasi tidak valid"),
                                     status=status.HTTP_200_OK)
             else:
-                geolocator = Nominatim()
+                geolocator = ArcGIS()
                 location = geolocator.reverse(str(latitude) + ", " + str(longitude))
                 user_location = UserLocation.objects.filter(user=user).first()
                 if user_location is None:

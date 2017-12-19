@@ -49,5 +49,5 @@ class UserLocationSerializer(serializers.ModelSerializer):
 
 class StoreCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        module = StoreCategory
+        model = StoreCategory
         fields = ('id', 'name', 'image_url')

@@ -9,7 +9,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from api.controllers import helpers
 from api.models import StoreCategory, Store, StoreStatus, Image, User
-from api.serializers import StoreSerializer, UserSerializer
+from api.serializers import StoreSerializer, UserSerializer, StoreCategorySerializer
 
 
 class StoreView(APIView):
@@ -79,6 +79,25 @@ class GetStoresView(APIView):
                 users = User.objects.filter(store__in=stores).all()
                 data = UserSerializer(users, many=True).data
                 response = Response(helpers.success_context(users=data),
+                                    status=status.HTTP_200_OK)
+        except Exception as e:
+            print(str(e))
+            response = Response(helpers.fatal_context(), status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return response
+
+
+class StoreCategoryView(APIView):
+    authentication_classes = [JSONWebTokenAuthentication]
+
+    def get(self, request):
+        try:
+            if request.user is None:
+                response = Response(helpers.fail_context(message="Auth gagal"),
+                                    status=status.HTTP_200_OK)
+            else:
+                stores = StoreCategory.objects.all()
+                data = StoreCategorySerializer(stores, many=True).data
+                response = Response(helpers.success_context(categories=data),
                                     status=status.HTTP_200_OK)
         except Exception as e:
             print(str(e))
