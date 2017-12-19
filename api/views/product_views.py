@@ -21,14 +21,17 @@ class ProductView(APIView):
     @permission_classes(IsBuyer, )
     def get(self, request):
         try:
-            user_id = request.GET.get('user_id')
+            print(request.user)
+            if request.user.role.name == 'buyer':
+                user_id = request.GET.get('user_id')
+            elif request.user.role.name == 'seller':
+                user_id = request.user.id
+            else:
+                return Response(helpers.fail_context(message="Permission denied"),
+                                status=status.HTTP_403_FORBIDDEN)
             if user_id is None or User.objects.filter(id=user_id).first() is None:
                 response = Response(helpers.fail_context(message="user/toko tidak valid"),
                                     status=status.HTTP_200_OK)
-            elif request.user.role.name != 'buyer':
-                response = Response(helpers.fail_context(message="Permission denied"),
-                                    status=status.HTTP_403_FORBIDDEN)
-
             else:
                 product_data = Product.objects.filter(store=user_id).all()
                 products = ProductSerializer(product_data, many=True).data
@@ -43,6 +46,7 @@ class ProductView(APIView):
         try:
             user = request.user
             name = request.data.get('name')
+            print(name)
             price = request.data.get('price')
             image_base64 = request.data.get('image')
             if user.role.name != 'seller':
