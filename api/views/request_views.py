@@ -45,7 +45,8 @@ class OrderView(APIView):
                 order = Order.objects.create(seller=seller, buyer=user, status_id=1, total_price=total_price,
                                              latitude=latitude, longitude=longitude, note=note, address=address)
                 for p in products:
-                    OrderItem.objects.create(order=order, item=p)
+                    count = product_ids.count(p.id)
+                    OrderItem.objects.create(order=order, item=p, count=count)
                 request_data = OrderSerializer(order).data
                 response = Response(helpers.success_context(order=request_data), status=status.HTTP_200_OK)
         except Exception as e:
@@ -65,7 +66,6 @@ class OrderView(APIView):
                     seller_location = (o.latitude, o.longitude)
                     distance = vincenty(buyer_location, seller_location).km
                     data = OrderSerializer(o).data
-                    print(data)
                     data['distance'] = distance
                     order_data += [data]
                 response = Response(helpers.success_context(orders=order_data),

@@ -46,6 +46,7 @@ class ProductView(APIView):
         try:
             user = request.user
             name = request.data.get('name')
+            print(name)
             price = request.data.get('price')
             image_base64 = request.data.get('image')
             if user.role.name != 'seller':
